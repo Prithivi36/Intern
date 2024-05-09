@@ -1,4 +1,4 @@
-package Booking.Server2.server2;
+package Booking.Server2.server2.Repository;
 
 import Booking.Server2.server2.Entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;

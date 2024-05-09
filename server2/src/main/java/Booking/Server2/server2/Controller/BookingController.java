@@ -1,9 +1,11 @@
-package Booking.Server2.server2;
+package Booking.Server2.server2.Controller;
 
 import Booking.Server2.server2.Entity.Booking;
 import Booking.Server2.server2.Entity.BookingDto;
 import Booking.Server2.server2.Entity.OrderDto;
 import Booking.Server2.server2.Entity.OrderEntity;
+import Booking.Server2.server2.Repository.OrderRepository;
+import Booking.Server2.server2.Repository.BookingRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
