@@ -69,8 +69,9 @@ public class OrderEntryService {
             orderEntity.setPieces(pieces);
             orderRepository.save(orderEntity);
 
-        }
+            restTemplate.put(baseUrl+"/bcn/syn/"+awbno,exchangedDto,HttpMethod.PUT);
 
+        }
         return "Success";
     }
 }

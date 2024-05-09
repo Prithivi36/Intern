@@ -36,4 +36,9 @@ public class BookingController {
     public BookingDto findBookingCnno(@PathVariable Long no){
         return bookingService.findByBookingCnno(no);
     }
+
+    @PutMapping("/bcn/syn/{no}")
+    public String syncBookingPieces(@PathVariable  Long no){
+        return bookingService.syncBookingPieces(no);
+    }
 }

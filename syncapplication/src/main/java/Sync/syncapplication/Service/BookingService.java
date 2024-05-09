@@ -38,4 +38,11 @@ public class BookingService {
     public BookingDto findByBookingCnno(Long bookingCnno){
         return mapper.map(bookingRepository.findByBookCnno(bookingCnno), BookingDto.class);
     }
+
+    public String syncBookingPieces(Long bookingCnno){
+        Booking booking=bookingRepository.findByBookCnno(bookingCnno);
+        booking.setBookPieceSync(true);
+        bookingRepository.save(booking);
+        return booking.toString();
+    }
 }
