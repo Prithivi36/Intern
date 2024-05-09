@@ -6,6 +6,7 @@ import Booking.Server2.server2.Entity.OrderDto;
 import Booking.Server2.server2.Entity.OrderEntity;
 import Booking.Server2.server2.Repository.OrderRepository;
 import Booking.Server2.server2.Repository.BookingRepository;
+import Booking.Server2.server2.Service.OrderEntryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,31 +27,11 @@ import java.util.List;
 @AllArgsConstructor
 public class BookingController {
 
-    BookingRepository bookingRepository;
-    RestTemplate restTemplate;
-    ModelMapper mapper;
-    OrderRepository orderRepository;
+    OrderEntryService orderEntryService;
 
     @GetMapping("/sync")
-    public List<BookingDto> addBooking() throws JsonProcessingException {
-        String baseUrl="http://SpringServer1:8080";
-        String exchangeValue=restTemplate.exchange(baseUrl+"/get", HttpMethod.GET,new ResponseEntity<>(HttpStatus.OK),String.class).getBody();
-
-        ObjectMapper objMapper = new ObjectMapper();
-        objMapper.registerModule(new JavaTimeModule());
-
-        List<Booking>  exchangedDto=objMapper.readValue(exchangeValue,new TypeReference<List<Booking>>(){});
-
-        for(Booking bookingDto:exchangedDto){
-            if(!bookingDto.isAwbSync()){
-                OrderDto orderDto=new OrderDto();
-                orderDto.setAwbno(bookingDto.getBookCnno());
-                orderRepository.save(mapper.map(orderDto, OrderEntity.class));
-                bookingRepository.save(bookingDto);
-                restTemplate.put(baseUrl+"/patch/"+bookingDto.getBookCnno(),bookingDto,HttpMethod.PUT);
-            }
-        }
-        return exchangedDto.stream().map((i)->mapper.map(i, BookingDto.class)).toList();
+    public List<BookingDto> addBookingNo() throws JsonProcessingException {
+        return orderEntryService.addBookingNo();
     }
 
 }
