@@ -29,7 +29,7 @@ public class OrderEntryService {
     ModelMapper mapper;
     OrderRepository orderRepository;
 
-    public List<BookingDto> addBookingNo() throws JsonProcessingException {
+    public String addBookingNo() throws JsonProcessingException {
         String baseUrl="http://SpringServer1:8080";
         String exchangeValue=restTemplate.exchange(baseUrl+"/get", HttpMethod.GET,new ResponseEntity<>(HttpStatus.OK),String.class).getBody();
 
@@ -47,7 +47,7 @@ public class OrderEntryService {
                 restTemplate.put(baseUrl+"/patch/"+bookingDto.getBookCnno(),bookingDto,HttpMethod.PUT);
             }
         }
-        return exchangedDto.stream().map((i)->mapper.map(i, BookingDto.class)).toList();
+        return exchangedDto.toString();
     }
 
     public String addBookingPieces() throws JsonProcessingException {

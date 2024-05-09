@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +26,27 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@AllArgsConstructor
 public class BookingController {
 
+    @Autowired
     OrderEntryService orderEntryService;
 
-    @GetMapping("/sync")
-    public List<BookingDto> addBookingNo() throws JsonProcessingException {
+    @Value("$(auth.key)")
+    private String authKey;
+
+    @GetMapping("/sync/{key}")
+    public String addBookingNo(@PathVariable String key) throws JsonProcessingException {
+        if(!authKey.equals(key)) {
+            return "Wrong Auth Key";
+        }
         return orderEntryService.addBookingNo();
     }
 
-    @GetMapping("/piecessync")
-    public String SyncBooking() throws JsonProcessingException {
+    @GetMapping("/piecessync/{key}")
+    public String SyncBooking(@PathVariable String key) throws JsonProcessingException {
+        if(!authKey.equals(key)) {
+            return "Wrong auth key";
+        }
         return orderEntryService.addBookingPieces();
     }
 }
