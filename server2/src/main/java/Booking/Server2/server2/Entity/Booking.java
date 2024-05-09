@@ -24,6 +24,7 @@ public class Booking {
     private int bookVolDivid;
     private double bookVolWeight;
     private int bookPieces;
+    private boolean bookPieceSync;
     private double bookWeight;
     private String bookStatus;
     private String status;
