@@ -31,7 +31,7 @@ public class BookingController {
     @Autowired
     OrderEntryService orderEntryService;
 
-    @Value("$(auth.key)")
+    @Value("${auth.key}")
     private String authKey;
 
     @GetMapping("/sync/{key}")

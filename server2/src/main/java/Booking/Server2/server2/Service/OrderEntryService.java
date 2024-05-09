@@ -31,7 +31,7 @@ public class OrderEntryService {
 
     public String addBookingNo() throws JsonProcessingException {
         String baseUrl="http://SpringServer1:8080";
-        String exchangeValue=restTemplate.exchange(baseUrl+"/get", HttpMethod.GET,new ResponseEntity<>(HttpStatus.OK),String.class).getBody();
+        String exchangeValue=restTemplate.exchange(baseUrl+"/getall", HttpMethod.GET,new ResponseEntity<>(HttpStatus.OK),String.class).getBody();
 
         ObjectMapper objMapper = new ObjectMapper();
         objMapper.registerModule(new JavaTimeModule());
@@ -44,7 +44,7 @@ public class OrderEntryService {
                 orderDto.setAwbno(bookingDto.getBookCnno());
                 orderRepository.save(mapper.map(orderDto, OrderEntity.class));
                 bookingRepository.save(bookingDto);
-                restTemplate.put(baseUrl+"/patch/"+bookingDto.getBookCnno(),bookingDto,HttpMethod.PUT);
+                restTemplate.put(baseUrl+"/change/"+bookingDto.getBookCnno(),bookingDto,HttpMethod.PUT);
             }
         }
         return exchangedDto.toString();
@@ -56,7 +56,7 @@ public class OrderEntryService {
 
         for(OrderEntity orderEntity:orderEntityList){
             Long awbno=orderEntity.getAwbno();
-            String baseUrl="http://localhost:8080";
+            String baseUrl="http://SpringServer1:8080";
             String exchangeValue=restTemplate.exchange(baseUrl+"/bcn/"+awbno, HttpMethod.GET,new ResponseEntity<>(HttpStatus.OK),String.class).getBody();
 
             ObjectMapper objMapper = new ObjectMapper();
