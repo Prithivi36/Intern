@@ -1,4 +1,4 @@
-package Sync.syncapplication;
+package Sync.syncapplication.Repository;
 
 import Sync.syncapplication.Entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;

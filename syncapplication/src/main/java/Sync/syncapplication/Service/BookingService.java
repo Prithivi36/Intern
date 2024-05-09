@@ -1,22 +1,21 @@
-package Sync.syncapplication;
+package Sync.syncapplication.Service;
 
 import Sync.syncapplication.Entity.Booking;
 import Sync.syncapplication.Entity.BookingDto;
+import Sync.syncapplication.Repository.BookingRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@CrossOrigin("*")
+@Service
 @AllArgsConstructor
-public class BookingController {
-
+public class BookingService {
     BookingRepository bookingRepository;
     ModelMapper mapper = new ModelMapper();
 
-    @PostMapping("/post")
     public String addBooking(@RequestBody BookingDto booking) {
         Booking bookingEntity = mapper.map(booking, Booking.class);
         Booking booked = bookingRepository.save(bookingEntity);
@@ -24,7 +23,6 @@ public class BookingController {
         return booked.toString();
     }
 
-    @PutMapping("/patch/{book}")
     public String changeStats(@PathVariable Long book){
         Booking booking=bookingRepository.findByBookCnno(book);
         booking.setAwbSync(true);
@@ -32,7 +30,6 @@ public class BookingController {
         return booking.toString();
     }
 
-    @GetMapping("/get")
     public List<BookingDto> getBookings(){
         List<Booking> bookings=bookingRepository.findAll();
         return  bookings.stream().map((i)->mapper.map(i, BookingDto.class)).toList();
