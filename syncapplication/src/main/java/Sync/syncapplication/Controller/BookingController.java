@@ -31,4 +31,9 @@ public class BookingController {
     public String changeBoooking(@PathVariable Long booking){
         return bookingService.changeStats(booking);
     }
+
+    @GetMapping("/bcn/{no}")
+    public BookingDto findBookingCnno(@PathVariable Long no){
+        return bookingService.findByBookingCnno(no);
+    }
 }

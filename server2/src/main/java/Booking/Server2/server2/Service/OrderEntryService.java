@@ -49,4 +49,23 @@ public class OrderEntryService {
         }
         return exchangedDto.stream().map((i)->mapper.map(i, BookingDto.class)).toList();
     }
+
+    public String addBookingPieces() throws JsonProcessingException {
+        String baseUrl="http://SpringServer1:8080";
+
+        String exchangeValue=restTemplate.exchange(baseUrl+"/get", HttpMethod.GET,new ResponseEntity<>(HttpStatus.OK),String.class).getBody();
+
+        ObjectMapper objMapper = new ObjectMapper();
+        objMapper.registerModule(new JavaTimeModule());
+
+        List<Booking>  exchangedDto=objMapper.readValue(exchangeValue,new TypeReference<List<Booking>>(){});
+
+        List<OrderEntity> orderEntityList=orderRepository.findAll();
+
+        for(OrderEntity orderEntity:orderEntityList){
+            Long awbno=orderEntity.getAwbno();
+
+
+        }
+    }
 }

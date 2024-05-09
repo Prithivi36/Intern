@@ -34,4 +34,8 @@ public class BookingService {
         List<Booking> bookings=bookingRepository.findAll();
         return  bookings.stream().map((i)->mapper.map(i, BookingDto.class)).toList();
     }
+
+    public BookingDto findByBookingCnno(Long bookingCnno){
+        return mapper.map(bookingRepository.findByBookCnno(bookingCnno), BookingDto.class);
+    }
 }
