@@ -66,10 +66,12 @@ public class OrderEntryService {
 
             int pieces =exchangedDto.getBookPieces();
 
-            orderEntity.setPieces(pieces);
-            orderRepository.save(orderEntity);
+            if(pieces>0){
+                orderEntity.setPieces(pieces);
+                orderRepository.save(orderEntity);
+                restTemplate.put(baseUrl+"/bcn/syn/"+awbno,exchangedDto,HttpMethod.PUT);
 
-            restTemplate.put(baseUrl+"/bcn/syn/"+awbno,exchangedDto,HttpMethod.PUT);
+            }
 
         }
         return "Success";

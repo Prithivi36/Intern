@@ -34,4 +34,8 @@ public class BookingController {
         return orderEntryService.addBookingNo();
     }
 
+    @GetMapping("/piecessync")
+    public String SyncBooking() throws JsonProcessingException {
+        return orderEntryService.addBookingPieces();
+    }
 }
