@@ -39,7 +39,7 @@ public class MessageServiceImpl implements MessageService {
         List<String> falseEmails=new ArrayList<>();
         List<CustomerDetails> customerList=customerRepo.findAll();
         List<String> mailIds=new ArrayList<>();
-        int filledCounter=0;
+        int batchCounter=0;
         for (CustomerDetails customerDetails : customerList){
             String mail=customerDetails.getMail();
             System.out.println(mail);
@@ -49,11 +49,19 @@ public class MessageServiceImpl implements MessageService {
             }
             if(mail.contains("@")&&mail.contains(".")) {
                 mailIds.add(mail);
-                filledCounter++;
+                batchCounter++;
                 sendLog.add(customerDetails.getFirstName());
             }else falseEmails.add(customerDetails.getFirstName()+" : "+customerDetails.getMail());
+
+            if(batchCounter==100){
+                sendMessageOne(mailIds.toArray(new String[0]),subject,body);
+                batchCounter=0;
+                mailIds.clear();
+            }
         }
-        sendMessageOne(mailIds.toArray(String[] mailIds),subject,body);
+        if(!mailIds.isEmpty()) {
+            sendMessageOne(mailIds.toArray(new String[0]),subject,body);
+        }
         return new SentLog(
                 sendLog,
                 sendLogFailed,

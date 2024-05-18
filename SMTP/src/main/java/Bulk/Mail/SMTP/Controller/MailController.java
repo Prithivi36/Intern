@@ -36,10 +36,10 @@ public class MailController {
     }
     @GetMapping
     public String insertDummy(){
-        for(int i=0;i<=80;i++){
+        for(int i=0;i<=280;i++){
             customerDbRepo.save(
                     new CustomerDetails(
-                            Long.valueOf(i) ,"customer"+i,"user"+i+"@gmail.com"
+                            Long.valueOf(i) ,"customer"+i,"customer"+i+"@gmail.com"
                     )
             );
         }
