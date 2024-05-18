@@ -36,7 +36,8 @@ public class ConversionService {
                 return "Failed to retrive Image , Excited with Statscode : " + responseEntity.getStatusCode();
             }
         }catch (Exception e){
-            return "Failed to retrive Image , Excited with Statscode : " + HttpStatus.NOT_FOUND;
+//            return "Failed to retrive Image , Excited with Statscode : " + HttpStatus.NOT_FOUND;
+        return "<h1>Not found</h1><p>Requested Image Not Found</p>";
         }
 
 
