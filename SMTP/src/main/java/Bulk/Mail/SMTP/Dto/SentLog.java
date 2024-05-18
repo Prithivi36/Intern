@@ -14,4 +14,5 @@ import java.util.List;
 public class SentLog {
     private List<String> Success;
     private List<String> failed;
+    private List<String> falseMails;
 }

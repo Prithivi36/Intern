@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class MailController {
@@ -27,15 +30,16 @@ public class MailController {
 
     @PostMapping("/send")
     public String sendOne(@RequestBody MailStructure mailStructure){
+        List<String> mails = new ArrayList<>();
         return messageService.sendMessageOne(new String[]{"soulpubg79@gmail.com","pubgnewstate977@gmail.com","prithivipappian97@gmail.com"}, mailStructure.getSubject(),
                 mailStructure.getBody());
     }
     @GetMapping
     public String insertDummy(){
-        for(int i=0;i<=100;i++){
+        for(int i=0;i<=80;i++){
             customerDbRepo.save(
                     new CustomerDetails(
-                            Long.valueOf(i) ,"customer"+i,"customer"+i+"@gmail.com"
+                            Long.valueOf(i) ,"customer"+i,"user"+i+"@gmail.com"
                     )
             );
         }
