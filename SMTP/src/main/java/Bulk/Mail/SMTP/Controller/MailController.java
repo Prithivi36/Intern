@@ -7,25 +7,30 @@ import Bulk.Mail.SMTP.Repo.CustomerDbRepo;
 import Bulk.Mail.SMTP.Service.MessageService;
 import Bulk.Mail.SMTP.ServiceImpl.MessageServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin("*")
 public class MailController {
 
     MessageService messageService;
     CustomerDbRepo customerDbRepo;
 
-    @PostMapping("/")
-    public SentLog sendMail(@RequestBody MailStructure mailStructure){
+    @GetMapping("/")
+    public String progbar() {
+        return "<h1>paper</h1>"; // Thymeleaf template name without .html
+    }
 
-        return messageService.sendMessage(mailStructure.getSubject(), mailStructure.getBody());
+    @PostMapping("/")
+    public SseEmitter sendMail(@RequestBody MailStructure mailStructure){
+
+        return  messageService.sendMessage(mailStructure.getSubject(), mailStructure.getBody());
     }
 
     @PostMapping("/send")
@@ -34,7 +39,7 @@ public class MailController {
         return messageService.sendMessageOne(new String[]{"soulpubg79@gmail.com","pubgnewstate977@gmail.com","prithivipappian97@gmail.com"}, mailStructure.getSubject(),
                 mailStructure.getBody());
     }
-    @GetMapping
+    @GetMapping("/load")
     public String insertDummy(){
         for(int i=0;i<=280;i++){
             customerDbRepo.save(
